@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(rmf_workcell_manager)
+project(workcell_triggers)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -31,12 +31,14 @@ include_directories(
   include
 )
 
-add_library(rmf_workcell_manager
+add_library(${PROJECT_NAME}
   src/dispenser_trigger.cpp
   src/ingestor_trigger.cpp
 )
 
-ament_target_dependencies(rmf_workcell_manager
+ament_export_libraries(${PROJECT_NAME})
+
+ament_target_dependencies(${PROJECT_NAME}
   rclcpp
   std_srvs
   rmf_dispenser_msgs
@@ -44,7 +46,8 @@ ament_target_dependencies(rmf_workcell_manager
   rmf_task_msgs
 )
 
-ament_export_libraries(rmf_workcell_manager)
+
+ament_export_libraries(${PROJECT_NAME})
 
 
 if(BUILD_TESTING)
@@ -59,16 +62,23 @@ if(BUILD_TESTING)
 endif()
 
 install(TARGETS
-  rmf_workcell_manager
+  ${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
 )
-
 
 install(
   DIRECTORY include/
   DESTINATION include
 )
 
-ament_export_include_directories(include)
+install(
+  TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
 ament_package()

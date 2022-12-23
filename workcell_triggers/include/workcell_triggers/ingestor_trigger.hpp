@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RMF_WORKCELL_MANAGER__INGESTOR_TRIGGER_HPP_
-#define RMF_WORKCELL_MANAGER__INGESTOR_TRIGGER_HPP_
+#ifndef WORKCELL_TRIGGERS__INGESTOR_TRIGGER_HPP_
+#define WORKCELL_TRIGGERS__INGESTOR_TRIGGER_HPP_
 
 #include <string>
 #include <unordered_set>
@@ -28,7 +28,7 @@
 #include "rmf_task_msgs/msg/dispatch_states.hpp"
 
 
-namespace rmf_workcell_manager
+namespace workcell_triggers
 {
 
 class IngestorTrigger
@@ -93,6 +93,6 @@ private:
 
 };
 
-}  // namespace rmf_workcell_manager
+}  // namespace workcell_triggers
 
-#endif  // RMF_WORKCELL_MANAGER__INGESTOR_TRIGGER_HPP_
+#endif  // WORKCELL_TRIGGERS__INGESTOR_TRIGGER_HPP_
