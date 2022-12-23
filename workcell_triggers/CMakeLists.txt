@@ -31,14 +31,12 @@ include_directories(
   include
 )
 
-add_library(${PROJECT_NAME}
+add_library(workcell_triggers
   src/dispenser_trigger.cpp
   src/ingestor_trigger.cpp
 )
 
-ament_export_libraries(${PROJECT_NAME})
-
-ament_target_dependencies(${PROJECT_NAME}
+set(dependencies
   rclcpp
   std_srvs
   rmf_dispenser_msgs
@@ -46,8 +44,12 @@ ament_target_dependencies(${PROJECT_NAME}
   rmf_task_msgs
 )
 
+ament_target_dependencies(workcell_triggers
+  ${dependencies}
+)
 
-ament_export_libraries(${PROJECT_NAME})
+ament_export_targets(workcell_triggersTargets HAS_LIBRARY_TARGET)
+# ament_export_libraries(workcell_triggers)
 
 
 if(BUILD_TESTING)
@@ -61,24 +63,20 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-install(TARGETS
-  ${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-)
-
 install(
   DIRECTORY include/
   DESTINATION include
 )
 
 install(
-  TARGETS ${PROJECT_NAME}
-  EXPORT ${PROJECT_NAME}
+  TARGETS workcell_triggers
+  EXPORT workcell_triggersTargets
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
   RUNTIME DESTINATION bin
   INCLUDES DESTINATION include
 )
 
+# ament_export_include_directories(include)
+ament_export_dependencies(${dependencies})
 ament_package()
