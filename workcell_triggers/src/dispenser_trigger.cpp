@@ -40,7 +40,7 @@ DispenserTrigger::DispenserTrigger(const rclcpp::Node::SharedPtr node)
 
   // Initialize dispenser request subscriber
   dispenser_request_sub_ = node_->create_subscription<DispenserRequest>(
-    "dispenser_requests",
+    "/dispenser_requests",
     // Use default QoS profile
     rclcpp::SystemDefaultsQoS(),
     std::bind(
@@ -51,10 +51,10 @@ DispenserTrigger::DispenserTrigger(const rclcpp::Node::SharedPtr node)
 
   // Initialize dispenser result publisher
   dispenser_result_pub_ = node_->create_publisher<DispenserResult>(
-    "dispenser_results", 10);
+    "/dispenser_results", 10);
 
   dispatch_state_listener_ = node_->create_subscription<rmf_task_msgs::msg::DispatchStates>(
-    "dispatch_states",
+    "/dispatch_states",
     // Use default QoS profile
     rclcpp::SystemDefaultsQoS(),
     std::bind(

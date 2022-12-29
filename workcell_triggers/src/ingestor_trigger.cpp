@@ -40,7 +40,7 @@ IngestorTrigger::IngestorTrigger(const rclcpp::Node::SharedPtr node)
 
   // Initialize ingestor request subscriber
   ingestor_request_sub_ = node_->create_subscription<IngestorRequest>(
-    "ingestor_requests",
+    "/ingestor_requests",
     // Use default QoS profile
     rclcpp::SystemDefaultsQoS(),
     std::bind(
@@ -51,10 +51,10 @@ IngestorTrigger::IngestorTrigger(const rclcpp::Node::SharedPtr node)
 
   // Initialize ingestor result publisher
   ingestor_result_pub_ = node_->create_publisher<IngestorResult>(
-    "ingestor_results", 10);
+    "/ingestor_results", 10);
 
   dispatch_state_listener_ = node_->create_subscription<rmf_task_msgs::msg::DispatchStates>(
-    "dispatch_states",
+    "/dispatch_states",
     // Use default QoS profile
     rclcpp::SystemDefaultsQoS(),
     std::bind(
