@@ -19,11 +19,12 @@
 #include "pseudo_workcells/pseudo_workcells.hpp"
 
 int main(int argc, char* argv[])
-{   
+{
     // consider creating a lifecycle node here just to extract
     // params instead of the constructor of the pseudo workcell
     rclcpp::init(argc, argv);
-    auto workcells = std::make_shared<pseudo_workcells::PseudoWorkcells>("pseudo_workcells");
+    auto node = std::make_shared<rclcpp::Node>("pseudo_workcells");
+    auto workcells = std::make_shared<pseudo_workcells::PseudoWorkcells>(node);
     workcells->init_workcells();
     workcells->spin_all();
     rclcpp::shutdown();

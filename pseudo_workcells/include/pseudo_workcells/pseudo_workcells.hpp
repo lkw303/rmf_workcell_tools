@@ -24,7 +24,7 @@
 
 namespace pseudo_workcells{
 
-class PseudoWorkcells : public rclcpp::Node
+class PseudoWorkcells
 {
 private:
   std::vector<std::string> ingestor_names;
@@ -32,9 +32,10 @@ private:
   std::vector<std::shared_ptr<workcell_triggers::IngestorTrigger>> ingestors;
   std::vector<std::shared_ptr<workcell_triggers::DispenserTrigger>> dispensers;
   rclcpp::executors::MultiThreadedExecutor executor;
+  rclcpp::Node::SharedPtr node;
 
 public:
-  PseudoWorkcells(const std::string & node_name);
+  PseudoWorkcells(const rclcpp::Node::SharedPtr _node);
   void spin_all();
   void init_workcells();
 

@@ -16,14 +16,12 @@ import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
-from launch_ros.actions import ComposableNodeContainer
+from launch_ros.actions import ComposableNodeContainer, Node
 from launch_ros.descriptions import ComposableNode
 
-# TODO: Launch multi-threaded executor
-'''
 def generate_launch_description():
     ingestor_list = DeclareLaunchArgument(
-        'ingestors', 
+        'ingestors',
         default_value="[\
             'product_dropoff_1',\
             'stock_holding_1', \
@@ -43,31 +41,21 @@ def generate_launch_description():
             'cnc_3' \
         ]"
     )
-    container = ComposableNodeContainer(
-        name="pseudo_workcell_container",
-        package="rclcpp_components",
-        executable="component_container"
-        composable_node_descriptions=[
-            ComposableNode(
-                package="pseudo_workcells",
-                
-            )
-        ]
+
+    _parameters=[{
+        'ingestors': LaunchConfiguration('ingestors'),
+        'dispensers': LaunchConfiguration('dispensers'),
+        }]
+
+    node = Node(
+        package='pseudo_workcells',
+        executable='pseudo_workcells',
+        name='pseudo_workcells',
+        parameters=_parameters
     )
 
-    # return LaunchDescription([
-    #     ingestor_list,
-    #     dispenser_list,
-    #     Node(
-    #         package='pseudo_workcells',
-    #         executable='pseudo_workcells',
-    #         name='pseudo_workcells',
-    #         parameters=[{
-    #             'ingestors': LaunchConfiguration('ingestors'),
-    #             'dispensers': LaunchConfiguration('dispensers'),
-    #         }],
-    #         # prefix=['xterm -e gdb -ex run --args'],
-    #         output='screen',
-    #     )
-    # ])
-'''
+    return LaunchDescription([
+        ingestor_list,
+        dispenser_list,
+        node,
+    ])

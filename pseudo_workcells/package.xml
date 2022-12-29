@@ -4,7 +4,7 @@
   <name>pseudo_workcells</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="lum_kai_wen@artc.a-star.edu.sg">kai</maintainer>
+  <maintainer email="lum_kai_wen@artc.a-star.edu.sg">Kai Wen Lum</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -14,6 +14,8 @@
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
+
+  <exec_depend>ros2launch</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
