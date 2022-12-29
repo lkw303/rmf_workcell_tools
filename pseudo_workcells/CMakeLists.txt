@@ -29,10 +29,29 @@ add_executable(pseudo_workcells
   src/main.cpp
 )
 
+add_executable(pseudo_dispenser
+  src/pseudo_dispenser.cpp
+)
+
+add_executable(pseudo_ingestor
+  src/pseudo_ingestor.cpp
+)
+
 ament_target_dependencies(pseudo_workcells
   workcell_triggers
   rclcpp
 )
+
+ament_target_dependencies(pseudo_dispenser
+  workcell_triggers
+  rclcpp
+)
+
+ament_target_dependencies(pseudo_ingestor
+  workcell_triggers
+  rclcpp
+)
+
 
 # target_link_libraries(pseudo_workcells
 #   workcell_triggers::workcell_triggers)
@@ -51,6 +70,8 @@ endif()
 
 install(TARGETS
   pseudo_workcells
+  pseudo_dispenser
+  pseudo_ingestor
   DESTINATION lib/${PROJECT_NAME}
 )
 
