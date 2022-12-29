@@ -34,11 +34,11 @@ def generate_launch_description():
     dispenser_list = DeclareLaunchArgument(
         'dispensers', 
         default_value="[ \
-            'storage_1',  \
-            'storage_2', \
-            'cnc_1', \
-            'cnc_2', \
-            'cnc_3' \
+            'storage_1_dispenser',  \
+            'storage_2_dispenser', \
+            'cnc_1_dispenser', \
+            'cnc_2_dispenser', \
+            'cnc_3_dispenser' \
         ]"
     )
 

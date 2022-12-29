@@ -19,16 +19,16 @@ namespace pseudo_workcells{
   PseudoWorkcells::PseudoWorkcells(const rclcpp::Node::SharedPtr _node)
   {
     node = std::move(_node);
-    node->declare_parameter("ingestors", std::vector<std::string> ({"product_dropoff_2"}));
-    node->declare_parameter("dispensers", std::vector<std::string> ({"storage_1_dispenser"}));
+    node->declare_parameter("ingestors", std::vector<std::string> ({"product_dropoff_2","stock_holding_1",}));
+    node->declare_parameter("dispensers", std::vector<std::string> ({"storage_1_dispenser", "storage_2_dispenser"}));
 
     ingestor_names = node->get_parameter("ingestors").as_string_array();
     dispenser_names = node->get_parameter("dispensers").as_string_array();
     for (auto& i: ingestor_names) {
-      RCLCPP_INFO(node->get_logger(),"ingestor: %s", i.data());
+      RCLCPP_INFO(node->get_logger(),"ingestor registered: %s", i.data());
     }
     for (auto& d: dispenser_names) {
-      RCLCPP_INFO(node->get_logger(),"dispenser: %s", d.data()); 
+      RCLCPP_INFO(node->get_logger(),"dispenser registered: %s", d.data());
     }
   }
 
@@ -44,13 +44,12 @@ namespace pseudo_workcells{
         [&d, &_n](const std::string & robot_id)
         {
           // TODO: Debug segmentation fault when calling RCLCPP_INFO here
-
-          // RCLCPP_INFO(
-          //   _n->get_logger(), 
-          //   "Dispensing from %s to robot {%s}", d.data(), robot_id.data()
-          // );
+          RCLCPP_INFO(
+            _n->get_logger(),
+            "Dispensing from %s to robot {%s}", d.data(), robot_id.data()
+          );
         };
-      auto dispenser_trigger = 
+      auto dispenser_trigger =
         workcell_triggers::DispenserTrigger::make_dispenser_trigger(_n, func);
 
       executor.add_node(_n);
@@ -64,14 +63,14 @@ namespace pseudo_workcells{
     // create ingestors
     for (auto & i : ingestor_names) {
       auto _n = std::make_shared<rclcpp::Node>(i, i);
-      std::function<void (const std::string &)> func = 
+      std::function<void (const std::string &)> func =
         [&i, &_n](const std::string & robot_id)
         {
           // TODO: Debug segmentation fault when calling RCLCPP_INFO here
-          // RCLCPP_INFO(
-          //   _n->get_logger(), 
-          //   "Ingesting from robot {%s} to %s", robot_id.data(), i.data()
-          // );
+          RCLCPP_INFO(
+            _n->get_logger(),
+            "Ingesting from robot {%s} to %s", robot_id.data(), i.data()
+          );
         };
       auto ingestor_trigger =
         workcell_triggers::IngestorTrigger::make_ingestor_trigger(_n, func);
@@ -79,7 +78,7 @@ namespace pseudo_workcells{
       executor.add_node(_n);
       ingestors.push_back(ingestor_trigger);
       RCLCPP_INFO(
-        _n->get_logger(), 
+        _n->get_logger(),
         "Created ingestor node: %s", i.data()
       );
     }
